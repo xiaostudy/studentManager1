@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.ResultsDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Results">
+		<id column="results_id" property="resultsId" jdbcType="INTEGER" />
+		<result column="results_number" property="resultsNumber" jdbcType="VARCHAR" />
+		<result column="sname" property="sname" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<collection  property="student" ofType="com.xiaostudy.domain.Student" ><!-- javaType="HashSet" -->
+			<id column="student_id" property="studentId" jdbcType="INTEGER" />
+			<result column="student_number" property="studentNumber" jdbcType="INTEGER" />
+			<result column="student_name" property="studentName" jdbcType="VARCHAR" />
+			<result column="sex" property="sex" jdbcType="VARCHAR" />
+			<result column="born" property="born" jdbcType="DATE" />
+			<result column="home" property="home" jdbcType="VARCHAR" />
+			<result column="home_name" property="homeName" jdbcType="VARCHAR" />
+			<result column="home_contact" property="homeContact" jdbcType="VARCHAR" />
+			<result column="admission_date" property="admissionDate" jdbcType="DATE" />
+		</collection>
+		<collection  property="test" ofType="com.xiaostudy.domain.Test" ><!-- javaType="HashSet" -->
+			<id column="test_id" property="testId" jdbcType="INTEGER" />
+			<result column="test_number" property="testNumber" jdbcType="VARCHAR" />
+			<result column="test_name" property="testName" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		r.results_id, r.results_number, r.student_id, r.test_id, score,
+		s.student_id, s.student_number, s.student_name, s.sex, s.born, s.home, s.home_name, s.home_contact, s.admission_date,
+		t.test_id, t.test_number, t.test_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		r.results_number, r.student_id, r.test_id, score,
+		s.student_id, s.student_number, s.student_name, s.sex, s.born, s.home, s.home_name, s.home_contact, s.admission_date,
+		t.test_id, t.test_number, t.test_name
+	</sql>
+
+
+	<select id="selectResultsAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from results r, student s, test t
+		where r.student_id = s.student_id and r.test_id = t.test_id
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from results r, student s, test t
+		where r.student_id = s.student_id and r.test_id = t.test_id  and results_id = #{resultsId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByResultsNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from results r, student s, test t
+		where r.student_id = s.student_id and r.test_id = t.test_id  and results_number = #{resultsNumber,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByScore" resultMap="BaseResultMap"
+			parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from results r, student s, test t
+		where r.student_id = s.student_id and r.test_id = t.test_id  and score = #{score,jdbcType=INTEGER}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from results
+		where results_id = #{resultsId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByResultsNumber" parameterType="java.lang.Integer">
+		delete from results
+		where results_number = #{resultsNumber,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.xiaostudy.domain.Results">
+		insert into results (
+		results_id, results_number, student_id, test_id, score
+		)values (
+		#{resultsId,jdbcType=INTEGER},
+		#{resultsNumber,jdbcType=VARCHAR},
+		#{student.studentId,jdbcType=INTEGER},
+		#{test.testId,jdbcType=INTEGER},
+		#{score,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Results">
+		insert into results (
+		results_number, student_id, test_id, score
+		)values (
+		#{resultsNumber,jdbcType=VARCHAR},
+		#{student.studentId,jdbcType=INTEGER},
+		#{test.testId,jdbcType=INTEGER},
+		#{score,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Results">
+		update results
+		set
+		results_number = #{resultsNumber,jdbcType=VARCHAR},
+		student_id =	#{student.studentId,jdbcType=INTEGER},
+		test_id =	#{test.testId,jdbcType=INTEGER},
+		score = #{score,jdbcType=INTEGER}
+		where results_id =
+		#{resultsId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByResultsNumber" parameterType="com.xiaostudy.domain.Results">
+		update results
+		set
+		student_id =	#{student.studentId,jdbcType=INTEGER},
+		test_id =	#{test.testId,jdbcType=INTEGER},
+		score = #{score,jdbcType=INTEGER}
+		where results_number =
+		#{resultsNumber,jdbcType=VARCHAR}
+	</update>
+</mapper>

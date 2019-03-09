@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.ClazzDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Clazz">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="clazz_id" property="clazzId" jdbcType="INTEGER" />
+		<result column="clazz_name" property="clazzName" jdbcType="VARCHAR" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+		<result column="tname" property="tname" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, clazz_id, clazz_name, grade_name, tname
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		clazz_id, clazz_name, grade_name, tname
+	</sql>
+
+	<select id="selectClazzAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByClazzId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+		where clazz_id = #{clazzId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByClazzName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+		where clazz_name = #{clazzName,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByGradeName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+		where grade_name = #{gradeName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByTname" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from clazz_t
+		where tname = #{tname,jdbcType=VARCHAR}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from clazz_t
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByClazzId" parameterType="java.lang.Integer">
+		delete from clazz_t
+		where clazz_id = #{clazzId,jdbcType=INTEGER}
+	</delete>
+	
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Clazz">
+		insert into clazz_t (
+		<include refid="Base_Column_List" />
+		)values (
+		#{id,jdbcType=INTEGER},
+		#{clazzId,jdbcType=INTEGER},
+		#{clazzName,jdbcType=VARCHAR},
+		#{gradeName,jdbcType=DATE},
+		#{tname,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Clazz">
+		insert into clazz_t (
+		<include refid="Base_Column_List_NoID" />
+		)values (
+		#{clazzId,jdbcType=INTEGER},
+		#{clazzName,jdbcType=VARCHAR},
+		#{gradeName,jdbcType=DATE},
+		#{tname,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Clazz">
+		update clazz_t
+		set
+		clazz_id = #{clazzId,jdbcType=INTEGER},
+		clazz_name =	#{clazzName,jdbcType=VARCHAR},
+		grade_name = #{gradeName,jdbcType=VARCHAR},
+		tname =	#{tname,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByClazzId" parameterType="com.xiaostudy.domain.Clazz">
+		update clazz_t
+		set
+		clazz_name =	#{clazzName,jdbcType=VARCHAR},
+		grade_name = #{gradeName,jdbcType=VARCHAR},
+		tname =	#{tname,jdbcType=VARCHAR}
+		where clazz_id =
+		#{clazzId,jdbcType=INTEGER}
+	</update>
+</mapper>

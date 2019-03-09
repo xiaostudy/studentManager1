@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.ResultsDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Results">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="results_id" property="resultsId" jdbcType="INTEGER" />
+		<result column="sname" property="sname" jdbcType="VARCHAR" />
+		<result column="test_name" property="testName" jdbcType="VARCHAR" />
+		<result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, results_id, sname, test_name, subject_name, score
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		results_id, sname, test_name, subject_name, score
+	</sql>
+
+
+	<select id="selectResultsAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByResultsId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+		where results_id = #{resultsId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByTestName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+		where test_name = #{testName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectBySubjectName" resultMap="BaseResultMap"
+			parameterType="java.lang.String">
+	select
+		<include refid="Base_Column_List" />
+		from results_t
+		where subject_name = #{subjectName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectBySname" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+		where sname = #{sname,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByScore" resultMap="BaseResultMap"
+			parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from results_t
+		where score = #{score,jdbcType=INTEGER}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from results_t
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByResultsId" parameterType="java.lang.Integer">
+		delete from results_t
+		where results_id = #{resultsId,jdbcType=INTEGER}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Results">
+		insert into results_t (
+		<include refid="Base_Column_List" />
+		)values (
+		#{id,jdbcType=INTEGER},
+		#{resultsId,jdbcType=INTEGER},
+		#{sname,jdbcType=VARCHAR},
+		#{testName,jdbcType=VARCHAR},
+		#{subjectName,jdbcType=VARCHAR},
+		#{score,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Results">
+		update results_t
+		set
+		results_id = #{resultsId,jdbcType=INTEGER},
+		sname =	#{sname,jdbcType=VARCHAR},
+		test_name =	#{testName,jdbcType=VARCHAR},
+		subject_name = #{subjectName,jdbcType=VARCHAR},
+		score = #{score,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByResultsId" parameterType="com.xiaostudy.domain.Results">
+		update results_t
+		set
+		sname =	#{sname,jdbcType=VARCHAR},
+		test_name =	#{testName,jdbcType=VARCHAR},
+		subject_name = #{subjectName,jdbcType=VARCHAR},
+		score = #{score,jdbcType=INTEGER}
+		where results_id =
+		#{resultsId,jdbcType=INTEGER}
+	</update>
+</mapper>

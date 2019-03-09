@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.StudentDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Student">
+		<id column="student_id" property="studentId" jdbcType="INTEGER" />
+		<result column="student_number" property="studentNumber" jdbcType="INTEGER" />
+		<result column="student_name" property="studentName" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="born" property="born" jdbcType="DATE" />
+		<result column="home" property="home" jdbcType="VARCHAR" />
+		<result column="home_name" property="homeName" jdbcType="VARCHAR" />
+		<result column="home_contact" property="homeContact" jdbcType="VARCHAR" />
+		<result column="admission_date" property="admissionDate" jdbcType="DATE" />
+		<collection  property="clazz" ofType="com.xiaostudy.domain.Clazz" ><!-- javaType="HashSet" -->
+			<id column="clazz_id" property="clazzId" jdbcType="INTEGER" />
+			<result column="clazz_number" property="clazzNumber" jdbcType="VARCHAR" />
+			<result column="clazz_name" property="clazzName" jdbcType="VARCHAR" />
+		</collection>
+
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		s.student_id, s.student_number, s.student_name, s.sex, s.born, s.home, s.home_name, s.home_contact, s.admission_date, s.clazz_id, c.clazz_id, c.clazz_number, c.clazz_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		s.student_number, s.student_name, s.sex, s.born, s.home, s.home_name, s.home_contact, s.admission_date, s.clazz_id, c.clazz_id, c.clazz_number, c.clazz_name
+	</sql>
+
+	<select id="selectStudentAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and student_id = #{studentId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByStudentNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and student_number = #{studentNumber,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByStudentName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and student_name = #{studentName,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectBySex" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and sex = #{sex,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByBorn" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and born = #{born,jdbcType=DATE}
+	</select>
+	
+	<select id="selectByHome" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and home = #{home,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByHomeName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and home_name = #{homeName,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByHomeContact" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and home_contact = #{homeContact,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByAdmissionDate" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from student s, clazz c
+		where s.clazz_id = c.clazz_id and admission_date = #{admissionDate,jdbcType=DATE}
+	</select>
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from student
+		where student_id = #{studentId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByStudentNumber" parameterType="java.lang.String">
+		delete from student
+		where student_number = #{studentNumber,jdbcType=VARCHAR}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Student">
+		insert into student (
+		student_id, student_number, student_name, sex, born, home, home_name, home_contact, admission_date, clazz_id
+		)values (
+		#{studentId,jdbcType=INTEGER},
+		#{studentNumber,jdbcType=VARCHAR},
+		#{studentName,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{homeName,jdbcType=VARCHAR},
+		#{homeContact,jdbcType=VARCHAR},
+		#{admissionDate,jdbcType=DATE},
+		#{clazz.clazzId,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Student">
+		insert into student (
+		student_number, student_name, sex, born, home, home_name, home_contact, admission_date, clazz_id
+		)values (
+		#{studentNumber,jdbcType=VARCHAR},
+		#{studentName,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{homeName,jdbcType=VARCHAR},
+		#{homeContact,jdbcType=VARCHAR},
+		#{admissionDate,jdbcType=DATE},
+		#{clazz.clazzId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Student">
+		update student
+		set
+		student_number = #{studentNumber,jdbcType=VARCHAR},
+		student_name =	#{studentName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		home_name =	#{homeName,jdbcType=VARCHAR},
+		home_contact =	#{homeContact,jdbcType=VARCHAR},
+		admission_date =	#{admissionDate,jdbcType=DATE},
+		student_name =	#{studentName,jdbcType=VARCHAR},
+		clazz_id =	#{clazz.clazzId,jdbcType=VARCHAR}
+		where student_id =
+		#{studentId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByStudentNumber" parameterType="com.xiaostudy.domain.Student">
+		update student
+		set
+		student_name =	#{studentName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		home_name =	#{homeName,jdbcType=VARCHAR},
+		home_contact =	#{homeContact,jdbcType=VARCHAR},
+		admission_date =	#{admissionDate,jdbcType=DATE},
+		student_name =	#{studentName,jdbcType=VARCHAR},
+		clazz_id =	#{clazz.clazzId,jdbcType=VARCHAR}
+		where student_number =
+		#{studentNumber,jdbcType=VARCHAR}
+	</update>
+</mapper>

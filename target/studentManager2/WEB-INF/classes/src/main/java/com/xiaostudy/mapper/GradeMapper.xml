@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.GradeDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Grade">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="grade_id" property="gradeId" jdbcType="INTEGER" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, grade_id, grade_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		grade_id, grade_name
+	</sql>
+
+
+	<select id="selectGradeAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from grade_t
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from grade_t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByGradeId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from grade_t
+		where grade_id = #{gradeId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByGradeName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from grade_t
+		where grade_name = #{gradeName,jdbcType=VARCHAR}
+	</select>
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from grade_t
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByGradeId" parameterType="java.lang.Integer">
+		delete from grade_t
+		where grade_id = #{gradeId,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insertGrade" parameterType="com.xiaostudy.domain.Grade">
+		insert into grade_t (
+		<include refid="Base_Column_List" />
+		)values (
+		#{id,jdbcType=INTEGER},
+		#{gradeId,jdbcType=INTEGER},
+		#{gradeName,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Grade">
+		update grade_t
+		set
+		grade_id = #{gradeId,jdbcType=INTEGER},
+		grade_name =	#{gradeName,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByGradeId" parameterType="com.xiaostudy.domain.Grade">
+		update grade_t
+		set
+		grade_name =	#{gradeName,jdbcType=VARCHAR}
+		where grade_id =
+		#{gradeId,jdbcType=INTEGER}
+	</update>
+</mapper>

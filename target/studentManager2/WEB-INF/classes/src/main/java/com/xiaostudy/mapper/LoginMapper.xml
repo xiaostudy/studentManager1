@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.LoginDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Login">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="login_id" property="loginId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="password_prompt" property="passwordPrompt" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, login_id, name, password, password_prompt
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		login_id, name, password, password_prompt
+	</sql>
+
+
+	<select id="selectLoginAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from login_t
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from login_t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByLoginId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from login_t
+		where login_id = #{loginId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from login_t
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from login_t
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByLoginId" parameterType="java.lang.Integer">
+		delete from login_t
+		where login_id = #{loginId,jdbcType=INTEGER}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Login">
+		insert into login_t (
+		<include refid="Base_Column_List" />
+		)values (
+		#{id,jdbcType=INTEGER},
+		#{loginId,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{passwordPrompt,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Login">
+		update login_t
+		set
+		login_id = #{loginId,jdbcType=INTEGER},
+		name =	#{name,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		password_prompt =	#{passwordPrompt,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByLoginId" parameterType="com.xiaostudy.domain.Login">
+		update login_t
+		set
+		name =	#{name,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		password_prompt =	#{passwordPrompt,jdbcType=VARCHAR}
+		where login_id =
+		#{loginId,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,100 @@
+body {
+  margin-top: 10px;
+  margin-right: 10%;
+  margin-bottom: 10px;
+  margin-left: 10%;
+  text-align: center;
+  height: auto;
+  width: auto;
+  background-color: aliceblue;
+  font-size: 12px;
+  color: #000000;
+                      }
+
+a { /*a标签去掉下划线*/
+    text-decoration: none;
+}
+
+#div a:hover span{
+    background-color: dodgerblue;
+    padding: 0 5px 0 5px;
+}
+
+.top {
+    width: 100px;
+}
+
+input {
+    width: 120px;
+    border: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditSubject {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddSubject {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditTeacher {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddTeacher {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditGrade {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddGrade {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditClazz {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddClazz {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditStudent {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddStudent {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditTest {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddTest {
+    display: none;
+}
+
+/*默认隐藏保存编辑链接*/
+.saveEditResults {
+    display: none;
+}
+
+/*默认隐藏确认保存链接*/
+#inAddResults {
+    display: none;
+}

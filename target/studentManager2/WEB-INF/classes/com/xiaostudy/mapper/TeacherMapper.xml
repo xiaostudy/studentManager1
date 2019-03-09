@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.TeacherDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Teacher">
+		<id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+		<result column="teacher_number" property="teacherNumber" jdbcType="VARCHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="born" property="born" jdbcType="DATE" />
+		<result column="home" property="home" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="entry_date" property="entryDate" jdbcType="DATE" />
+		<collection  property="subject" ofType="com.xiaostudy.domain.Subject" ><!-- javaType="HashSet" -->
+			<id column="subject_id" property="subjectId"></id>
+			<result column="subject_number" property="subjectNumber"/>
+			<result column="subject_name" property="subjectName"/>
+		</collection>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		t.teacher_id, t.teacher_number, t.teacher_name, t.sex, t.born, t.home, t.contact, t.entry_date, t.subject_id, s.subject_id, s.subject_number, s.subject_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		t.teacher_number, t.teacher_name, t.sex, t.born, t.home, t.contact, t.entry_date, t.subject_id, s.subject_id, s.subject_number, s.subject_name
+	</sql>
+
+
+	<select id="selectTeacherAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.teacher_id = #{teacherId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByTeacherNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.teacher_number = #{teacherNumber,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByTeacherName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.teacher_name = #{teacherName,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectBySex" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.sex = #{sex,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByBorn" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.born = #{born,jdbcType=DATE}
+	</select>
+	
+	<select id="selectByHome" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.home = #{home,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByContact" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.contact = #{contact,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByEntryDate" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from teacher t, subject s
+		where t.subject_id = s.subject_id and t.entry_date = #{entryDate,jdbcType=DATE}
+	</select>
+
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from teacher
+		where teacher_id = #{teacherId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteBysubjectNumber" parameterType="java.lang.String">
+		delete from teacher
+		where teacher_number = #{teacherNumber,jdbcType=INTEGER}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Teacher">
+		insert into teacher (
+		teacher_id, teacher_number, teacher_name, sex, born, home, contact, entry_date, subject_id
+		)values (
+		#{teacherId,jdbcType=INTEGER},
+		#{teacherNumber,jdbcType=VARCHAR},
+		#{teacherName,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR},
+		#{entryDate,jdbcType=DATE},
+		#{subject.subjectId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Teacher">
+		insert into teacher (
+		teacher_number, teacher_name, sex, born, home, contact, entry_date, subject_id
+		)values (
+		#{teacherNumber,jdbcType=VARCHAR},
+		#{teacherName,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR},
+		#{entryDate,jdbcType=DATE},
+		#{subject.subjectId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Teacher">
+		update teacher
+		set
+		teacher_number = #{teacherNumber,jdbcType=VARCHAR},
+		teacher_name =	#{teacherName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		contact =	#{contact,jdbcType=VARCHAR},
+		entry_date =	#{entryDate,jdbcType=DATE},
+		teacher_name =	#{teacherName,jdbcType=VARCHAR},
+		subject_id =	#{subject.subjectId,jdbcType=VARCHAR}
+		where teacher_id =
+		#{teacherId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBysubjectNumber" parameterType="com.xiaostudy.domain.Teacher">
+		update teacher
+		set
+		teacher_name =	#{teacherName,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		contact =	#{contact,jdbcType=VARCHAR},
+		entry_date =	#{entryDate,jdbcType=DATE},
+		teacher_name =	#{teacherName,jdbcType=VARCHAR},
+		subject_id =	#{subject.subjectId,jdbcType=VARCHAR}
+		where teacher_number =
+		#{teacherNumber,jdbcType=INTEGER}
+	</update>
+</mapper>

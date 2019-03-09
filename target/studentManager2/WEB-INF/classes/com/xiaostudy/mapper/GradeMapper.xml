@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.GradeDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Grade">
+		<id column="grade_id" property="gradeId" jdbcType="INTEGER" />
+		<result column="grade_number" property="gradeNumber" jdbcType="VARCHAR" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		grade_id, grade_number, grade_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		grade_number, grade_name
+	</sql>
+
+
+	<select id="selectGradeAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from grade
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from grade
+		where grade_id = #{gradeId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByGradeNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from grade
+		where grade_number = #{gradeNumber,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByGradeName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from grade
+		where grade_name = #{gradeName,jdbcType=VARCHAR}
+	</select>
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from grade
+		where grade_id = #{gradeId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByGradeNumber" parameterType="java.lang.String">
+		delete from grade
+		where grade_number = #{gradeNumber,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insertGrade" parameterType="com.xiaostudy.domain.Grade">
+		insert into grade (
+		<include refid="Base_Column_List" />
+		)values (
+		#{gradeId,jdbcType=INTEGER},
+		#{gradeNumber,jdbcType=VARCHAR},
+		#{gradeName,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertGradeNoID" parameterType="com.xiaostudy.domain.Grade">
+		insert into grade (
+		<include refid="Base_Column_List_NoID" />
+		)values (
+		#{gradeNumber,jdbcType=VARCHAR},
+		#{gradeName,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Grade">
+		update grade
+		set
+		grade_number = #{gradeNumber,jdbcType=VARCHAR},
+		grade_name =	#{gradeName,jdbcType=VARCHAR}
+		where grade_id =
+		#{gradeId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByGradeNumber" parameterType="com.xiaostudy.domain.Grade">
+		update grade
+		set
+		grade_name =	#{gradeName,jdbcType=VARCHAR}
+		where grade_number =
+		#{gradeNumber,jdbcType=VARCHAR}
+	</update>
+</mapper>

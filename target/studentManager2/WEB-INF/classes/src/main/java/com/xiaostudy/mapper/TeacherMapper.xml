@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.TeacherDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Teacher">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="t_id" property="tid" jdbcType="INTEGER" />
+		<result column="tname" property="tname" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="born" property="born" jdbcType="DATE" />
+		<result column="home" property="home" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="entry_date" property="entryDate" jdbcType="DATE" />
+		<result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, t_id, tname, sex, born, home, contact, entry_date, subject_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		t_id, tname, sex, born, home, contact, entry_date, subject_name
+	</sql>
+
+
+	<select id="selectTeacherAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByTid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where t_id = #{tid,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByTname" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where tname = #{tname,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectBySex" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where sex = #{sex,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByBorn" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where born = #{born,jdbcType=DATE}
+	</select>
+	
+	<select id="selectByHome" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where home = #{home,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByContact" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where contact = #{contact,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByEntryDate" resultMap="BaseResultMap"
+		parameterType="java.util.Date">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where entry_date = #{entryDate,jdbcType=DATE}
+	</select>
+	
+	<select id="selectBySubjectName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from teacher_t
+		where subject_name = #{subjectName,jdbcType=VARCHAR}
+	</select>
+
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from teacher_t
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByTid" parameterType="java.lang.Integer">
+		delete from teacher_t
+		where t_id = #{tid,jdbcType=INTEGER}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Teacher">
+		insert into teacher_t (
+		<include refid="Base_Column_List" />
+		)values (
+		#{id,jdbcType=INTEGER},
+		#{tid,jdbcType=INTEGER},
+		#{tname,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR},
+		#{entryDate,jdbcType=DATE},
+		#{subjectName,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Teacher">
+		insert into teacher_t (
+		<include refid="Base_Column_List_NoID" />
+		)values (
+		#{tid,jdbcType=INTEGER},
+		#{tname,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{born,jdbcType=DATE},
+		#{home,jdbcType=VARCHAR},
+		#{contact,jdbcType=VARCHAR},
+		#{entryDate,jdbcType=DATE},
+		#{subjectName,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Teacher">
+		update teacher_t
+		set
+		t_id = #{tid,jdbcType=INTEGER},
+		tname =	#{tname,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		contact =	#{contact,jdbcType=VARCHAR},
+		entry_date =	#{entryDate,jdbcType=DATE},
+		tname =	#{tname,jdbcType=VARCHAR},
+		subject_name =	#{subjectName,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByTid" parameterType="com.xiaostudy.domain.Teacher">
+		update teacher_t
+		set
+		tname =	#{tname,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		born =	#{born,jdbcType=DATE},
+		home =	#{home,jdbcType=VARCHAR},
+		contact =	#{contact,jdbcType=VARCHAR},
+		entry_date =	#{entryDate,jdbcType=DATE},
+		tname =	#{tname,jdbcType=VARCHAR},
+		subject_name =	#{subjectName,jdbcType=VARCHAR}
+		where t_id =
+		#{tid,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaostudy.dao.SubjectDao">
+	<resultMap id="BaseResultMap" type="com.xiaostudy.domain.Subject">
+		<id column="subject_id" property="subjectId" jdbcType="INTEGER" />
+		<result column="subject_number" property="subjectNumber" jdbcType="VARCHAR" />
+		<result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+		<collection  property="grade" ofType="com.xiaostudy.domain.Grade" ><!-- javaType="HashSet" -->
+			<id column="grade_id" property="gradeId"></id>
+			<result column="grade_number" property="gradeNumber"/>
+			<result column="grade_name" property="gradeName"/>
+		</collection>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		s.subject_id, s.subject_number, s.subject_name, s.grade_id, g.grade_id, g.grade_number, g.grade_name
+	</sql>
+
+	<sql id="Base_Column_List_NoID">
+		s.subject_number, s.subject_name, s.grade_id, g.grade_id, g.grade_number, g.grade_name
+	</sql>
+
+
+	<select id="selectSubjectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from subject s, grade g where s.grade_id = g.grade_id
+	</select>
+
+	<select id="selectSubjectPages" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from subject s, grade g where s.grade_id = g.grade_id limit #{i,jdbcType=INTEGER}, 5
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from subject s, grade g
+		where s.grade_id = g.grade_id and s.subject_id = #{subjectId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectBySubjectNumber" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subject s, grade g
+		where s.grade_id = g.grade_id and s.subject_number = #{subjectNumber,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectBySubjectName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subject s, grade g
+		where s.grade_id = g.grade_id and s.subject_name = #{subjectName,jdbcType=VARCHAR}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from subject
+		where subject_id = #{subjectId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteBySubjectNumber" parameterType="java.lang.String">
+		delete from subject
+		where subject_number = #{subjectNumber,jdbcType=VARCHAR}
+	</delete>
+
+	
+	<insert id="insert" parameterType="com.xiaostudy.domain.Subject">
+		insert into subject (
+		subject_id, subject_number, subject_name, grade_id
+		)values (
+		#{subjectId,jdbcType=INTEGER},
+		#{subjectNumber,jdbcType=VARCHAR},
+		#{subjectName,jdbcType=VARCHAR},
+		#{grade.gradeId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertNoID" parameterType="com.xiaostudy.domain.Subject">
+		insert into subject (
+		subject_number, subject_name, grade_id
+		)values (
+		#{subjectNumber,jdbcType=VARCHAR},
+		#{subjectName,jdbcType=VARCHAR},
+		#{grade.gradeId,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	
+	<update id="updateByPrimaryKey" parameterType="com.xiaostudy.domain.Subject">
+		update subject
+		set
+		subject_number = #{subjectNumber,jdbcType=VARCHAR},
+		subject_name =	#{subjectName,jdbcType=VARCHAR},
+		grade_id =	#{grade.gradeId,jdbcType=VARCHAR}
+		where subject_id =
+		#{subjectId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateBySubjectNumber" parameterType="com.xiaostudy.domain.Subject">
+		update subject
+		set
+		subject_name =	#{subjectName,jdbcType=VARCHAR},
+		grade_id =	#{grade.gradeId,jdbcType=VARCHAR}
+		where subject_number =
+		#{subjectNumber,jdbcType=VARCHAR}
+	</update>
+</mapper>
